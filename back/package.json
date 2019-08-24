@@ -1,0 +1,33 @@
+{
+  "name": "epost",
+  "version": "1.0.0",
+  "description": "express.js JSON",
+  "main": "app.js",
+  "author": "exaesel",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "DEBUG=app,app:* nodemon app.js",
+    "lint": "eslint app.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "chalk": "^2.4.2",
+    "debug": "^4.1.1",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.19.1"
+  },
+  "nodemonConfig": {
+    "restartable": "rs",
+    "ignore": [
+      "node_modules/**/node_modules"
+    ]
+  },
+  "delay": "2500",
+  "env": {
+    "NODE_ENV": "development",
+    "PORT": 4000
+  }
+}
