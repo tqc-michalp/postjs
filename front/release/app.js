@@ -659,6 +659,18 @@ eval("module.exports = function(originalModule) {\n\tif (!originalModule.webpack
 
 /***/ }),
 
+/***/ "./src/actions.ts":
+/*!************************!*\
+  !*** ./src/actions.ts ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nexports.REQUEST_POSTS = 'request_posts';\nexports.RECEIVED_POSTS = 'received_posts';\nfunction requestPosts() {\n    return {\n        type: exports.REQUEST_POSTS,\n    };\n}\nexports.requestPosts = requestPosts;\nfunction receivedPosts(posts) {\n    return {\n        type: exports.RECEIVED_POSTS,\n        posts\n    };\n}\nexports.receivedPosts = receivedPosts;\n\n\n//# sourceURL=webpack:///./src/actions.ts?");
+
+/***/ }),
+
 /***/ "./src/index.tsx":
 /*!***********************!*\
   !*** ./src/index.tsx ***!
@@ -691,7 +703,7 @@ eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nconst 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nconst React = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\nconst react_redux_1 = __webpack_require__(/*! react-redux */ \"./node_modules/react-redux/es/index.js\");\nconst post_1 = __webpack_require__(/*! ./post */ \"./src/posts/post.tsx\");\nclass Posts extends React.Component {\n    constructor(props) {\n        super(props);\n    }\n    render() {\n        if (this.props.fetchingPosts) {\n            return (React.createElement(\"div\", { className: \"\" },\n                React.createElement(\"h3\", null, \"Loading\")));\n        }\n        return (React.createElement(\"div\", null,\n            React.createElement(\"ul\", null, this.props.posts.map((value, index) => React.createElement(post_1.default, { key: index, index: index })))));\n    }\n}\nfunction mapStateToProps(state) {\n    return state;\n}\nfunction mapDispatchToProps() {\n}\nexports.default = react_redux_1.connect(mapStateToProps)(Posts);\n\n\n//# sourceURL=webpack:///./src/posts/posts.tsx?");
+eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nconst React = __webpack_require__(/*! react */ \"./node_modules/react/index.js\");\nconst react_redux_1 = __webpack_require__(/*! react-redux */ \"./node_modules/react-redux/es/index.js\");\nconst post_1 = __webpack_require__(/*! ./post */ \"./src/posts/post.tsx\");\nconst actions = __webpack_require__(/*! ../actions */ \"./src/actions.ts\");\nclass Posts extends React.Component {\n    constructor(props) {\n        super(props);\n        this.props.requestPosts();\n        this.fetchPosts();\n    }\n    render() {\n        if (this.props.fetchingPosts) {\n            return (React.createElement(\"div\", { className: \"\" },\n                React.createElement(\"h3\", null, \"Loading\")));\n        }\n        return (React.createElement(\"div\", null,\n            React.createElement(\"ul\", null, this.props.posts.map((value, index) => React.createElement(post_1.default, { key: index, index: index })))));\n    }\n    async fetchPosts() {\n        fetch('/posts');\n    }\n    ;\n}\nfunction mapStateToProps(state) {\n    return state;\n}\nfunction mapDispatchToProps(dispatch) {\n    return {\n        requestPosts: () => dispatch(actions.requestPosts()),\n        receivedPosts: () => dispatch(actions.receivedPosts()),\n    };\n}\nexports.default = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(Posts);\n\n\n//# sourceURL=webpack:///./src/posts/posts.tsx?");
 
 /***/ }),
 
@@ -703,7 +715,7 @@ eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nconst 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nconst redux_1 = __webpack_require__(/*! redux */ \"./node_modules/redux/es/redux.js\");\nfunction reducer(state, action) {\n    switch (action.type) {\n    }\n    return state;\n}\nconst preloadedState = {\n    // posts: [\n    //     {\n    //         title: 'Terminator',\n    //         content: 'test qwerty',\n    //         date: '2019-08-03 12:00:00 CEST'\n    //     }\n    // ]\n    posts: [],\n    fetchingPosts: true\n};\nexports.store = redux_1.createStore(reducer, preloadedState);\n// case 1\nexports.default = exports.store;\n// case 2\n// export const store;\n// case 3\n// export = store;\n\n\n//# sourceURL=webpack:///./src/store.ts?");
+eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nconst redux_1 = __webpack_require__(/*! redux */ \"./node_modules/redux/es/redux.js\");\nconst actions = __webpack_require__(/*! ./actions */ \"./src/actions.ts\");\nfunction reducer(state, action) {\n    switch (action.type) {\n        case actions.REQUEST_POSTS:\n            return {\n                ...state,\n                fetchingPosts: true,\n            };\n        case actions.RECEIVED_POSTS:\n            return {\n                ...state,\n                fetchingPosts: false,\n                posts: action.posts\n            };\n    }\n    return state;\n}\nconst preloadedState = {\n    // posts: [\n    //     {\n    //         title: 'Terminator',\n    //         content: 'test qwerty',\n    //         date: '2019-08-03 12:00:00 CEST'\n    //     }\n    // ]\n    posts: [],\n    fetchingPosts: true\n};\nexports.store = redux_1.createStore(reducer, preloadedState);\n// case 1\nexports.default = exports.store;\n// case 2\n// export const store;\n// case 3\n// export = store;\n\n\n//# sourceURL=webpack:///./src/store.ts?");
 
 /***/ })
 

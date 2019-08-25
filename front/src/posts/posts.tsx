@@ -2,11 +2,15 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { PostItem, State } from "../store";
 import Post from "./post";
+import * as actions from '../actions';
+import { Dispatch } from 'redux';
 
 class Posts extends React.Component<PostsProps > {
     constructor(props: PostsProps){
         super(props);
+        this.props.requestPosts();
 
+        this.fetchPosts();
     }
     render() {
         if(this.props.fetchingPosts){
@@ -24,18 +28,29 @@ class Posts extends React.Component<PostsProps > {
             </div>
         );
     }
+    async fetchPosts(){
+        fetch('/posts')
+    };
 }
+
+
 
 function mapStateToProps(state: State) {
     return state;
 }
 
-function mapDispatchToProps() {
+function mapDispatchToProps(dispatch: Dispatch) {
+    return {
+        requestPosts: () => dispatch(actions.requestPosts()),
+        receivedPosts: () => dispatch(actions.receivedPosts()),
+    };
 }
 
 interface PostsProps {
-    posts: PostItem[]
-    fetchingPosts: boolean
+    posts: PostItem[];
+    fetchingPosts: boolean;
+    requestPosts: () => any;
+    receivedPosts: () => any;
 }
 
-export default connect(mapStateToProps)(Posts);
+export default connect(mapStateToProps, mapDispatchToProps)(Posts);
