@@ -1,8 +1,20 @@
-import { createStore } from 'redux';
+import { createStore, Action } from 'redux';
+import * as actions from './actions';
 
 function reducer (state: State, action: any){
     switch (action.type) {
-
+        case actions.REQUEST_POSTS:
+            return {
+                ...state,
+                fetchingPosts: true,
+            };
+            
+        case actions.RECEIVED_POSTS:
+            return {
+                ...state,
+                fetchingPosts: false,
+                posts: action.posts 
+            }
     }
     return state;
 }
